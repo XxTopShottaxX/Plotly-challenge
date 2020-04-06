@@ -57,25 +57,24 @@ function createBubChart(bubbleInfo){
 
     d3.json("samples.json").then((data)=>{
      
-        var dataSample = data.samples;
-        var filterData = dataSample.filter(object=>object.id==bubbleInfo);
-        var result = filterData[0];
-        var otuId = result.otu_ids;
-        var sampleValues = result.sample_values;
-        var otuLabels = result.otu_labels;
-        console.log(sampleValues);
+        var dataBubSample = data.samples;
+        var filterBubData = dataBubSample.filter(object=>object.id==bubbleInfo);
+        var resultBub = filterBubData[0];
+        var otuIdBub = resultBub.otu_ids;
+        var sampleBubValues = resultBub.sample_values;
+        var otuBubLabels = resultBub.otu_labels;
+        console.log(sampleBubValues);
         var bubble_layout = {
             title: "Bacteria Culture per Sample"
         };
         var bubble_data = [{
-            type: "bubble",
-            x: otuId,
-            y: sampleValues,
-            text: otuLabels,
+            x: otuIdBub,
+            y: sampleBubValues,
+            text: otuBubLabels,
             mode: "markers",
             maker: {
-                size: sampleValues,
-                color: otuId,
+                size: sampleBubValues,
+                color: ['rgb(93, 164, 214)', 'rgb(255, 144, 14)',  'rgb(44, 160, 101)', 'rgb(255, 65, 54)'],
                 colorscale: "Earth"
             }
         }];
@@ -89,30 +88,33 @@ function createBarChart(barInfo){
 
     d3.json("samples.json").then((data)=>{
      
-        var dataSample = data.samples;
-        var filterData = dataSample.filter(object=>object.id==barInfo);
-        var result = filterData[0];
-        var otuId = result.otu_ids;
-        var sampleValues = result.sample_values;
-        var otuLabels = result.otu_labels;
-        console.log(sampleValues);
+        var dataBarSample = data.samples;
+        var filterBarData = dataBarSample.filter(object=>object.id==barInfo);
+        var resultBar = filterBarData[0];
+        var otuIdBar = resultBar.otu_ids;
+        var sampleBarValues = resultBar.sample_values;
+        var otuBarLabels = resultBar.otu_labels;
+        // var sortBarValue = sampleBarValues.sort(object)
+        // var top10 = 
+        console.log(sampleBarValues);
         var bar_layout = {
             title: "Bacteria Culture per Sample"
         };
         var bar_data = [{
             type: "bar",
-            x: otuId,
-            y: sampleValues,
-            text: otuLabels,
-            mode: "markers",
+            orientation: 'h',
+            x: sampleBarValues,
+            y: otuIdBar,
+            text: otuBarLabels,
+            // mode: "markers",
             maker: {
-                size: sampleValues,
-                color: otuId,
+                size: sampleBarValues,
+                color: otuIdBar,
                 colorscale: "Earth"
             }
         }];
 
-        Plotly.newPlot("bar", bar_data, bar_layout)
+        Plotly.newPlot('bar', bar_data, bar_layout)
 
     });
 }
