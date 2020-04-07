@@ -63,18 +63,22 @@ function createBubChart(bubbleInfo){
         var otuIdBub = resultBub.otu_ids;
         var sampleBubValues = resultBub.sample_values;
         var otuBubLabels = resultBub.otu_labels;
-        console.log(sampleBubValues);
+        console.log(resultBub);
         var bubble_layout = {
-            title: "Bacteria Culture per Sample"
+            title: "Bacteria Culture per Sample",
+            margin: { t: 0 },
+                hovermode: "closest",
+                xaxis: { title: "OTU ID" },
+      margin: { t: 30}
         };
         var bubble_data = [{
             x: otuIdBub,
             y: sampleBubValues,
             text: otuBubLabels,
             mode: "markers",
-            maker: {
+            marker: {
                 size: sampleBubValues,
-                color: ['rgb(93, 164, 214)', 'rgb(255, 144, 14)',  'rgb(44, 160, 101)', 'rgb(255, 65, 54)'],
+                color: otuIdBub,
                 colorscale: "Earth"
             }
         }];
@@ -103,9 +107,9 @@ function createBarChart(barInfo){
         var bar_data = [{
             type: "bar",
             orientation: 'h',
-            x: sampleBarValues,
-            y: otuIdBar,
-            text: otuBarLabels,
+            x: sampleBarValues.slice(0,10).reverse(),
+            y: otuIdBar.slice(0,10).map(otuID => `OTU ${otuID}`).reverse(),
+            text: otuBarLabels.slice(0,10).reverse(),
             // mode: "markers",
             maker: {
                 size: sampleBarValues,
